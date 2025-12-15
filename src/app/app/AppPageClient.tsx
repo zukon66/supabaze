@@ -62,7 +62,7 @@ export default function AppPageClient({ initialUser }: Props) {
     }
 
     const mapped: Group[] =
-      (data as GroupRow[] | null)?.flatMap((item) => {
+      (data as unknown as GroupRow[] | null)?.flatMap((item) => {
         if (!item.groups) return [];
         return [
           {
