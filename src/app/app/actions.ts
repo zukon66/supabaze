@@ -40,7 +40,7 @@ export async function createGroupAction(formData: FormData) {
   // We dropped the auto-trigger to handle this manually and robustly
   const { error: memberError } = await supabase
     .from('group_members')
-    .insert({
+    .upsert({
       group_id: data.id,
       user_id: user.id,
       role: 'admin'
