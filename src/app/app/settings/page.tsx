@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { deleteAccountAction } from './actions';
+import { getURL } from '@/lib/utils';
 
 export default function UserSettingsPage() {
     const router = useRouter();
@@ -32,9 +33,8 @@ export default function UserSettingsPage() {
         setMessage(null);
 
         // This URL must match the Update Password page route
-        // In local dev: http://localhost:3000/auth/update-password
-        // In prod: window.location.origin + '/auth/update-password'
-        const redirectTo = `${window.location.origin}/auth/callback?next=/auth/update-password`;
+        // In prod: getURL() + 'auth/update-password'
+        const redirectTo = `${getURL()}auth/callback?next=/auth/update-password`;
 
         try {
             const { error } = await supabase.auth.resetPasswordForEmail(email, {
@@ -149,8 +149,8 @@ export default function UserSettingsPage() {
 
                 {message && (
                     <div className={`mt-6 rounded-lg p-3 text-sm border ${message.type === 'success'
-                            ? 'bg-emerald-950/30 text-emerald-400 border-emerald-900/30'
-                            : 'bg-rose-950/30 text-rose-400 border-rose-900/30'
+                        ? 'bg-emerald-950/30 text-emerald-400 border-emerald-900/30'
+                        : 'bg-rose-950/30 text-rose-400 border-rose-900/30'
                         }`}>
                         {message.text}
                     </div>
