@@ -31,13 +31,17 @@ export default function TaskComments({ taskId, session }: TaskCommentsProps) {
     }, [taskId]);
 
     const fetchComments = async () => {
+        console.log('Fetching comments for taskId:', taskId);
         const { data, error } = await supabase
             .from('comments')
             .select('*, profiles(username, full_name)')
             .eq('task_id', taskId)
             .order('created_at', { ascending: true });
 
-        if (!error && data) {
+        if (error) {
+            console.error('Error fetching comments:', error);
+        } else {
+            console.log('Comments fetched:', data);
             // Cast data because Typescript might complain about the joined shape
             setComments(data as any as Comment[]);
         }
@@ -93,8 +97,8 @@ export default function TaskComments({ taskId, session }: TaskCommentsProps) {
                     return (
                         <div key={comment.id} className={`flex flex-col ${isMine ? 'items-end' : 'items-start'}`}>
                             <div className={`max-w-[85%] rounded-2xl px-4 py-2 text-sm shadow-sm ${isMine
-                                    ? 'bg-primary text-white rounded-br-none'
-                                    : 'bg-surface text-slate-200 border border-slate-700 rounded-bl-none'
+                                ? 'bg-primary text-white rounded-br-none'
+                                : 'bg-surface text-slate-200 border border-slate-700 rounded-bl-none'
                                 }`}>
                                 <p>{comment.content}</p>
                             </div>
