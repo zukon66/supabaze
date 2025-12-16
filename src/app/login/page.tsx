@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { loginAction } from './actions';
+import { translateAuthError } from '@/lib/utils';
 
 const initialState = { error: null as string | null };
 
@@ -40,7 +41,7 @@ export default function LoginPage() {
           </div>
           {state.error ? (
             <p className="text-sm text-rose-500" role="alert">
-              {state.error}
+              {translateAuthError(state.error)}
             </p>
           ) : null}
           <SubmitButton />

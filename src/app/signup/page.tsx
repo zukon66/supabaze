@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase/client';
-import { getURL } from '@/lib/utils';
+import { getURL, translateAuthError } from '@/lib/utils';
 
 export default function SignupPage() {
   const router = useRouter();
@@ -33,7 +33,7 @@ export default function SignupPage() {
     });
 
     if (signUpError) {
-      setError(signUpError.message);
+      setError(translateAuthError(signUpError.message));
       setLoading(false);
       return;
     }

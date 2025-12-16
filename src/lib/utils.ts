@@ -10,3 +10,20 @@ export const getURL = () => {
     url = url.charAt(url.length - 1) === '/' ? url : `${url}/`;
     return url;
 };
+
+export const translateAuthError = (errorMessage: string): string => {
+    switch (errorMessage) {
+        case 'User already registered':
+            return 'Bu e-posta adresi zaten kayıtlı. Lütfen giriş yapın.';
+        case 'Invalid login credentials':
+            return 'E-posta veya şifre hatalı. Lütfen kontrol edin.';
+        case 'Email not confirmed':
+            return 'E-posta adresi doğrulanmamış. Lütfen gelen kutunuzu kontrol edin.';
+        case 'Password should be at least 6 characters':
+            return 'Şifre en az 6 karakter olmalıdır.';
+        case 'Signup requires a valid password':
+            return 'Geçerli bir şifre girin.';
+        default:
+            return errorMessage; // Bilinmeyen hataları olduğu gibi göster
+    }
+};
